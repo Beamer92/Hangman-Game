@@ -22,10 +22,7 @@ def noose():
     drop.draw(win)
     
     brace = Line(Point(415,80), Point(385, 50))
-    brace.draw(win)
-    
-    
-    
+    brace.draw(win) 
     
 noose()    
     
