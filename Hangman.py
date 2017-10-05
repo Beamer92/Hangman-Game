@@ -28,7 +28,6 @@ def noose():
     
     brace = Line(Point(415,80), Point(385, 50))
     brace.draw(win) 
-       
 
 def wordgen():
     #One way to do without an API, produces words nobody would know 99% of the time
@@ -45,6 +44,38 @@ def wordgen():
     wordnum = random.randint(0,25)
     wordchoice = wordlist[wordnum]['word']
     return (wordchoice)
+           
 
-noose() 
-wordgen()
+#word = wordgen()
+#word2 = wordgen()
+#print(word + " " + str(len(word)))
+#print(word2 + " " + str(len(word2)))
+#noose() 
+
+class Game():
+    gameword = ""
+    wordlen = 0
+
+    def __init__(self): # this method creates the class object.
+        noose()
+        self.gameword = wordgen()
+        self.wordlen = len(self.gameword)
+    
+    def setup_game(self):
+        lines = self.wordlen
+        xaxis = 10
+        while lines > 0:
+            letterline = Line(Point(xaxis,420), Point(xaxis + 20,420))
+            letterline.draw(win)
+            lines -= 1
+            xaxis += 30
+
+    def game_loop(self):
+        input1 = input("Take your first guess: ")
+        print(input1)
+
+inst = Game()
+inst.setup_game()
+inst.game_loop()
+
+
