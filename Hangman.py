@@ -55,11 +55,13 @@ def wordgen():
 class Game():
     gameword = ""
     wordlen = 0
+    linearr = []
 
     def __init__(self): # this method creates the class object.
         noose()
         self.gameword = wordgen()
         self.wordlen = len(self.gameword)
+        self.linearr = []
     
     def setup_game(self):
         lines = self.wordlen
@@ -67,12 +69,24 @@ class Game():
         while lines > 0:
             letterline = Line(Point(xaxis,420), Point(xaxis + 20,420))
             letterline.draw(win)
+            self.linearr.append(xaxis)
             lines -= 1
             xaxis += 30
+    
+    def find_letters(self, inputchar, word):
+            print ([i for i, letter in enumerate(word) if letter == inputchar])
 
     def game_loop(self):
+       # print(self.linearr)
+        print(self.gameword)
         input1 = input("Take your first guess: ")
-        print(input1)
+        if input1 in self.gameword:
+                print("Yes")
+                inst.find_letters(input1, self.gameword)
+                lm = Image(Point(5,5), "letter_gifs/" + input1 + ".gif")
+                lm.draw(win)
+        else:
+                 print("NO")
 
 inst = Game()
 inst.setup_game()

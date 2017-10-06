@@ -13,6 +13,7 @@ keys.py
 Hangman-Game.pyproj
 Hangman-Game.sln
 _pycache_/
+Hangman-Game.pyproj.user
 
 # C extensions
 *.so
