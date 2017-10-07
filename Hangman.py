@@ -45,19 +45,14 @@ def wordgen():
     wordchoice = wordlist[wordnum]['word']
     return (wordchoice)
            
-
-#word = wordgen()
-#word2 = wordgen()
-#print(word + " " + str(len(word)))
-#print(word2 + " " + str(len(word2)))
-#noose() 
-
 class Game():
     gameword = ""
     wordlen = 0
     linearr = []
+    wrong_guesses = 0
+    right_guesses = 0
 
-    def __init__(self): # this method creates the class object.
+    def __init__(self): 
         noose()
         self.gameword = wordgen()
         self.wordlen = len(self.gameword)
@@ -74,19 +69,44 @@ class Game():
             xaxis += 30
     
     def find_letters(self, inputchar, word):
-            print ([i for i, letter in enumerate(word) if letter == inputchar])
+            return [i for i, letter in enumerate(word) if letter == inputchar]
+
+    def stickfigure(self, wrong_guesses):
+        head = Circle(Point(295, 85), 20)
+        body = Line(Point(305,105), Point(305,185))
+        if wrong_guesses == 0:
+            head.draw(win)
+            
+        if wrong_guesses == 1:
+            body.draw(win)
 
     def game_loop(self):
-       # print(self.linearr)
+        print(self.linearr)
         print(self.gameword)
-        input1 = input("Take your first guess: ")
-        if input1 in self.gameword:
+        guess = input("Take your first guess: ")
+        if guess in self.gameword:
                 print("Yes")
-                inst.find_letters(input1, self.gameword)
-                lm = Image(Point(5,5), "letter_gifs/" + input1 + ".gif")
-                lm.draw(win)
+                pos = inst.find_letters(guess, self.gameword)
+                for val in pos:
+                    self.right_guesses += 1
+                    pt = self.linearr[val] + 10
+                    lm = Image(Point(pt,410), "letter_gifs/" + guess + ".gif")
+                    lm.draw(win)
+                    
         else:
                  print("NO")
+                 inst.stickfigure(self.wrong_guesses)
+                 self.wrong_guesses += 1
+
+        if self.wrong_guesses == 5:
+                print ("Game Over. You Lose. The Word Was " + self.gameword)
+        if self.right_guesses == self.wordlen:
+                print ("You Win!")
+        if self.wrong_guesses != 5 and self.right_guesses != self.wordlen:
+                inst.game_loop()      
+
+ #To do: Error checking, limiting input to a single character, finish stick figure function, duplicate correct inputs shouldn't count towards win (store in string array?)
+ # duplicate wrong inputs maybe count? List wrong inputs so there's no excuse for stupidity
 
 inst = Game()
 inst.setup_game()
